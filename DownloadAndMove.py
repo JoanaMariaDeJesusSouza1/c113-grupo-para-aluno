@@ -1,17 +1,15 @@
 import sys
-import time
 import random
 
 import os
 import shutil
 
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
-
-from_dir = "C:/Users/jo__a/Downloads"            # Adicione o caminho da sua pasta "Downloads".
-to_dir = "C:/Users/jo__a/Documents/aulas em grupo/PYTHON/c113 grupo/PRO_1-4_C113_AtividadeDaProfessora3-main/arquivos" # Crie a pasta "Arquivos_Documentos" em sua área de trabalho e atualize o caminho de acordo.
 
 
+from_dir = ""            # Adicione o caminho da sua pasta "Downloads".
+to_dir = ""              # Crie a pasta "Arquivos_Documentos" em sua área de trabalho e atualize o caminho de acordo.
+
+#criando dicionário de extensões de arquivos.
 dir_tree = {
     "Image_Files": ['.jpg', '.jpeg', '.png', '.gif', '.jfif'],
     "Video_Files": ['.mpg', '.mp2', '.mpeg', '.mpe', '.mpv', '.mp4', '.m4p', '.m4v', '.avi', '.mov'],
@@ -32,46 +30,24 @@ class FileMovementHandler(FileSystemEventHandler):
         for key, value in dir_tree.items():
             time.sleep(1)
 
-            if extension in value:
+           
+                # if os.path.exists(path2):
 
-                file_name = os.path.basename(event.src_path)
-               
-                print("Baixado " + file_name)
+                #     print("Diretório Existe...")
+                #     print("Movendo " + file_name + "....")
+                #     shutil.move(path1, path3)
+                #     time.sleep(1)
 
-                path1 = from_dir + '/' + file_name
-                path2 = to_dir + '/' + key
-                path3 = to_dir + '/' + key + '/' + file_name
-
-                if os.path.exists(path2):
-
-                    print("Diretório Existe...")
-                    print("Movendo " + file_name + "....")
-                    shutil.move(path1, path3)
-                    time.sleep(1)
-
-                else:
-                    print("Criando Diretório...")
-                    os.makedirs(path2)
-                    print("Movendo " + file_name + "....")
-                    shutil.move(path1, path3)
-                    time.sleep(1)
+                # else:
+                    
 
 # Inicialize a Classe Gerenciadora de Eventos
-event_handler = FileMovementHandler()
+
 
 # Inicialize o Observer
-observer = Observer()
+
 
 # Agende o Observer
-observer.schedule(event_handler, from_dir, recursive=True)
+
 
 # Inicie o Observer
-observer.start()
-
-try:
-    while True:
-        time.sleep(2)
-        print("executando...")
-except KeyboardInterrupt:
-    print("interrompido!")
-    observer.stop()
